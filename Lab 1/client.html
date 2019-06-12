@@ -1,0 +1,127 @@
+<html>
+  <head>
+    <link href="client.css" type="text/css" rel="stylesheet">
+    <script src="client.js" type="text/javascript"></script>
+    <script src="serverstub.js" type="text/javascript"></script>
+    <title>Twidder - Socialize with other people around the world!</title>
+  </head>
+  <body>
+    <script type="text/html" id="welcomeView">
+      <form class="Logo" action="client.html" method="post" id="logo">
+        <img src = "wimage.png" alt="Twidder logo" width="340" height="400">
+      </form>
+      <div class="Float">
+        <form class="LogIn" action="client.html" method="post" id="logIn" onsubmit="signInVaidator(this); return false;">
+          <div class="LogInInputs">
+            <div><label class="welcomeView">Email:</label><input type="email" name="Email" value="" class="field" id="emailLogIn" required></div>
+            <div><label class="welcomeView">Password:</label><input type="password" name="Password" value="" class="field" id="passwordLogIn"></div>
+            <div><input class="buttonWelcomeView" type="submit" name="ButtonLogIn" value="Log in" id="buttonSignIn"></div>
+            <div id="textSignIn"></div>
+          </div>
+        </form>
+        <form class="SignUp" action="client.html" method="post" id="signUp" onsubmit="signUpValidator(this); return false;">
+          <h3 class="Title" id="signUpHereTitle"><strong>Sign up here</strong></h3>
+          <div class="SigUpInputs">
+            <div><label class="welcomeView">First name*: </label><input type="text" name="First Name" value="" class="field" id="firstName" required></div>
+            <div><label class="welcomeView">Family name*: </label><input type="text" name="Family Name" value="" class="field" id="familyName" required></div>
+            <div><label class="welcomeView"> Gender*: </label><select id="gender">
+              <option selected>Male</option>
+              <option>Female</option></select>
+            </div>
+            <div><label class="welcomeView">City*: </label><input type="text" name="City" value="" class="field" id="city" required></div>
+            <div><label class="welcomeView">Country*: </label><input type="text" name="Country" value="" class="field" id="country" required></div>
+            <div><label class="welcomeView">Email*: </label><input required type="email" name="Email" value="" class="field" id="emailSignUp" required></div>
+            <div><label class="welcomeView">Password*: </label><input required type="password" name="Password" value="" class="field" id="passwordSignUp" required></div>
+            <div><label class="welcomeView">Repeat Password*: </label><input required type="password" name="RepeatPassword" value="" class="field" id="repeatPassword" required></div>
+            <div><label class="welcomeView" id="mandatoryFieldsText"><i>Required fields (*)</i></label><input class="buttonWelcomeView" type="submit" name="ButtonSignUp" value="Sign up" id="buttonSignUp"></div>
+            <div id="textSignUp"></div>
+          </div>
+        </form>
+      </div>
+    </script>
+    <script type="text/html" id="profileView">
+      <div class="Options">
+        <table>
+          <tr>
+            <td>
+              <button type="button" class="OptionButton" id="homeButton" onclick="displayPanel('Home');">Home</button>
+            </td>
+            <td>
+              <button type="button" class="OptionButton" id="browseButton" onclick="displayPanel('Browse');">Browse</button>
+            </td>
+            <td>
+              <button type="button" class="OptionButton" id="accountButton" onclick="displayPanel('Account');">Account</button>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="OptionPanel" id="homePanel">
+        <div class="UserInformationAndComment">
+          <form id="userInformation">
+            <h3 class="Title">User information</h3>
+            <div><span class="homeView"><strong>Email: </strong><span id="emailSignedInUser"></span></span></div>
+            <div><span class="homeView"><strong>First name: </strong><span id="firstNameSignedInUser"></span></span></div>
+            <div><span class="homeView"><strong>Family name: </strong><span id="familyNameSignedInUser"></span></span></div>
+            <div><span class="homeView"><strong>Gender: </strong><span id="genderSignedInUser"></span></span></div>
+            <div><span class="homeView"><strong>City: </strong><span id="citySignedInUser"></span></span></div>
+            <div><span class="homeView"><strong>Country: </strong><span id="countrySignedInUser"></span></span></div>
+          </form>
+          <form class="PostComment" action="client.html" method="post" onsubmit="postComment(this); return false;">
+            <h3 class="Title">Post a comment</h3>
+            <div><textarea class="CommentBox" id="userCommentBox"></textarea></div>
+            <div><input class="CommentButton" type="submit" id="buttonUserPostComment" value="Post"></div>
+            <div id="resultText"></div>
+          </form>
+        </div>
+        <div class="CommentsWall">
+          <h3 class="Title">Comments wall</h3>
+          <form class="SeeComments" method="get" onsubmit="refreshWall(this); return false;">
+            <div><textarea readonly id="userCommentsWall"></textarea></div>
+            <div><input type="submit" class="CommentButton" id="buttonUserRefreshWall" value="Refresh"></div>
+          </form>
+        </div>
+      </div>
+      <div class="OptionPanel" id="browsePanel">
+        <div class="UserInformationAndComment">
+          <form id="otherUserInformation">
+            <h3 class="Title">User information</h3>
+            <div><label class="homeView"><strong>Type a username: </strong></label><input id="usernameSearchInput" type="email" required></div>
+            <div><button type="button" class="SearchButton" id="buttonSearchUser" onclick="searchUser(this); return false;">Search</button></div>
+            <div><span class="homeView"><strong>First name: </strong><span id="firstNameOtherUser"></span></span></div>
+            <div><span class="homeView"><strong>Family name: </strong><span id="familyNameOtherUser"></span></span></div>
+            <div><span class="homeView"><strong>Gender: </strong><span id="genderOtherUser"></span></span></div>
+            <div><span class="homeView"><strong>City: </strong><span id="cityOtherUser"></span></span></div>
+            <div><span class="homeView"><strong>Country: </strong><span id="countryOtherUser"></span></span></div>
+          </form>
+          <form class="PostComment" action="client.html" method="post" onsubmit="postComment(this); return false;">
+            <h3 class="Title">Post a comment</h3>
+            <div><textarea class="CommentBox" id="otherUserCommentBox"></textarea></div>
+            <div><input class="CommentButton" type="submit" id="buttonOtherUserPostComment" value="Post"></div>
+            <div id="otherResultText"></div>
+          </form>
+        </div>
+        <div class="CommentsWall">
+          <h3 class="Title">Comments wall</h3>
+          <form class="SeeComments" method="get" onsubmit="refreshWall(this); return false;">
+            <div><textarea readonly id="otherUserCommentsWall"></textarea></div>
+            <div><input type="submit" class="CommentButton" id="buttonOtherUserRefreshWall" value="Refresh"></div>
+          </form>
+        </div>
+      </div>
+      <div class="OptionPanel" id="accountPanel">
+        <div class="accountPanelInputs">
+          <p></p>
+          <h3 class="Title" id="changePasswordTitle"><strong>Change password</strong></h3>
+          <div><label class="accountView">Current password: </label><input type="password" name="Current password" value="" class="inputAccountView" id="currentPassword" required></div>
+          <div><label class="accountView">New password: </label><input type="password" name="New password" value="" class="inputAccountView" id="newPassword" required></div>
+          <div><label class="accountView">Repeat new password: </label><input type="password" name="Repeat new password" value="" class="inputAccountView" id="repeatNewPassword" required></div>
+          <div><button class="buttonAccountView" type="button" id="buttonChangePassword" onclick="changePassword(this); return false;">Change password</button></div>
+          <div id="changePasswordResultText"></div>
+          <h3 class="Title" id="signOutTitle"><strong>Sign out</strong></h3>
+          <div><button class="buttonAccountView" id="buttonSignOut" type="button" onclick="signOut(this); return false;">Sign out</button></div>
+         </div>
+      </div>
+    </script>
+    <div id="view"></div>
+  </body>
+</html>
